@@ -53,7 +53,7 @@ export default {
 };
 
 async function handleSinglePost(id: string, env: Env, origin: string | null): Promise<Response> {
-	const object = await env.bucket.get(`${id}.jpg`);
+	const object = await env.bucket.get(`coomer-${id.padStart(3, '0')}.jpg`);
 	if (!object) {
 		return new Response(JSON.stringify({ error: 'Post not found' }), {
 			status: 404,
@@ -63,7 +63,7 @@ async function handleSinglePost(id: string, env: Env, origin: string | null): Pr
 
 	const post: Post = {
 		id: `coomer #${id.padStart(3, '0')}`,
-		imageUrl: `https://coomflare.coomer.org/${id}.jpg`,
+		imageUrl: `https://coomflare.coomer.org/coomer-${id.padStart(3, '0')}.jpg`,
 	};
 
 	return new Response(JSON.stringify({ posts: [post] }), {
