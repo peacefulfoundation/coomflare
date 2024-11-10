@@ -53,7 +53,7 @@ export default {
 };
 
 async function handleSinglePost(id: string, env: Env, origin: string | null): Promise<Response> {
-	const object = await env.bucket.get(`coomer-${id.padStart(3, '0')}.jpg`);
+	const object = await env.bucket.get(`coomer-${id.padStart(4, '0')}.jpg`);
 	if (!object) {
 		return new Response(JSON.stringify({ error: 'Post not found' }), {
 			status: 404,
@@ -62,8 +62,8 @@ async function handleSinglePost(id: string, env: Env, origin: string | null): Pr
 	}
 
 	const post: Post = {
-		id: `coomer #${id.padStart(3, '0')}`,
-		imageUrl: `https://coomflare.coomer.org/coomer-${id.padStart(3, '0')}.jpg`,
+		id: `coomer #${id.padStart(4, '0')}`,
+		imageUrl: `https://coomflare.coomer.org/coomer-${id.padStart(4, '0')}.jpg`,
 	};
 
 	return new Response(JSON.stringify({ posts: [post] }), {
@@ -86,7 +86,7 @@ async function handlePostList(url: URL, env: Env, origin: string | null): Promis
 
 	const posts: Post[] = response.objects.map((obj) => {
 		const match = obj.key.match(/\d+/);
-		const formattedNumber = match ? match[0].padStart(3, '0') : '000';
+		const formattedNumber = match ? match[0].padStart(4, '0') : '0000';
 
 		return {
 			id: `coomer #${formattedNumber}`,
